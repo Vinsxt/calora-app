@@ -59,6 +59,7 @@ dependencies {
     implementation(libs.supabase.core)
     implementation(libs.supabase.auth)
     implementation(libs.supabase.postgrest)
+    implementation(libs.ktor.client.android)
 
     implementation(libs.androidx.credentials)
     implementation(libs.androidx.credentials.play.services)

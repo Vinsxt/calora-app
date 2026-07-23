@@ -7,6 +7,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.learnjetpack.auth.AuthRepository
 import com.example.learnjetpack.google.GoogleSignInManager
+import com.example.learnjetpack.supabase.supabase
+import io.github.jan.supabase.auth.auth
 import kotlinx.coroutines.launch
 
 class LoginViewModel : ViewModel() {
@@ -37,7 +39,6 @@ class LoginViewModel : ViewModel() {
                     googleSignInManager.getGoogleIdToken()
 
                 repository.signInWithGoogle(idToken)
-
                 loginSuccessful = true
 
             } catch (e: Exception) {

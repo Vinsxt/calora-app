@@ -16,15 +16,19 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.lifecycleScope
 import com.example.learnjetpack.navigation.AppNavigation
+import com.example.learnjetpack.supabase.supabase
 import com.example.learnjetpack.ui.theme.LearnJetpackTheme
+import io.github.jan.supabase.auth.auth
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         enableEdgeToEdge()
-
         setContent {
             LearnJetpackTheme {
                 AppNavigation()

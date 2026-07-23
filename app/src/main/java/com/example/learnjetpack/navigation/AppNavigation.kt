@@ -6,13 +6,16 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.learnjetpack.screens.HomeScreen
 import com.example.learnjetpack.screens.LoginScreen
+import com.example.learnjetpack.supabase.supabase
+import io.github.jan.supabase.auth.auth
 
 @Composable
 fun AppNavigation() {
 
     val navController = rememberNavController()
 
-    val isLoggedIn = false
+    val isLoggedIn =
+        supabase.auth.currentSessionOrNull() != null
 
     NavHost(
         navController = navController,

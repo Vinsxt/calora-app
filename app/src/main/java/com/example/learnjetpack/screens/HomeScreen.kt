@@ -25,8 +25,8 @@ fun HomeScreen(
 
         Button(
             onClick = {
-                navController.navigate("home") {
-                    popUpTo("login") {
+                navController.navigate("login") {
+                    popUpTo("home") {
                         inclusive = true
                     }
                 }
