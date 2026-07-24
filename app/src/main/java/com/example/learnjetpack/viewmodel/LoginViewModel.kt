@@ -5,10 +5,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.learnjetpack.auth.AuthRepository
+import com.example.learnjetpack.data.repository.AuthRepository
 import com.example.learnjetpack.google.GoogleSignInManager
-import com.example.learnjetpack.supabase.supabase
-import io.github.jan.supabase.auth.auth
 import kotlinx.coroutines.launch
 
 class LoginViewModel : ViewModel() {

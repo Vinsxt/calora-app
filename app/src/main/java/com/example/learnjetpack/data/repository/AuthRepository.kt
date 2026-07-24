@@ -1,4 +1,4 @@
-package com.example.learnjetpack.auth
+package com.example.learnjetpack.data.repository
 
 import com.example.learnjetpack.supabase.supabase
 import io.github.jan.supabase.auth.auth

@@ -1,4 +1,4 @@
-package com.example.learnjetpack.screens
+package com.example.learnjetpack.ui.screens
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
