@@ -7,20 +7,20 @@ data class Profile(
 
     val id: String,
 
-    val display_name: String?,
+    val display_name: String? = null,
 
-    val height_cm: Int?,
+    val height_cm: Int? = null,
 
-    val weight_kg: Double?,
+    val gender: String? = null,
 
-    val gender: String?,
+    val birth_date: String? = null,
 
-    val birth_date: String?,
+    val activity_level: String? = null,
 
-    val activity_level: String?,
+    val goal: String? = null,
 
-    val goal: String?,
+    val created_at: String? = null,
 
-    val created_at: String?
+    val onboarding_completed: Boolean = false
 
 )

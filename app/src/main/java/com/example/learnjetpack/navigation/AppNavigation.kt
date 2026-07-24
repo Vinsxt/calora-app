@@ -6,7 +6,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.learnjetpack.ui.screens.HomeScreen
 import com.example.learnjetpack.ui.screens.LoginScreen
-import com.example.learnjetpack.supabase.supabase
+import com.example.learnjetpack.data.remote.supabase
 import io.github.jan.supabase.auth.auth
 
 @Composable

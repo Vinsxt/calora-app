@@ -5,13 +5,14 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.learnjetpack.data.repository.AuthRepository
+import com.example.learnjetpack.data.repository.UserRepository
+import com.example.learnjetpack.di.AppContainer
 import com.example.learnjetpack.google.GoogleSignInManager
 import kotlinx.coroutines.launch
 
 class LoginViewModel : ViewModel() {
 
-    private val repository = AuthRepository()
+    private val repository = AppContainer.userRepository
 
     var isLoading by mutableStateOf(false)
         private set
@@ -37,6 +38,13 @@ class LoginViewModel : ViewModel() {
                     googleSignInManager.getGoogleIdToken()
 
                 repository.signInWithGoogle(idToken)
+
+                if (!repository.hasProfile()) {
+
+                    repository.createProfile()
+
+                }
+
                 loginSuccessful = true
 
             } catch (e: Exception) {
