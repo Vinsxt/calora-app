@@ -15,7 +15,9 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.learnjetpack.google.GoogleSignInManager
+import com.example.learnjetpack.session.SessionState
 import com.example.learnjetpack.viewmodel.LoginViewModel
+import com.example.learnjetpack.di.AppContainer
 
 @Composable
 fun LoginScreen(
@@ -34,11 +36,33 @@ fun LoginScreen(
 
         if (viewModel.loginSuccessful) {
 
-            navController.navigate("home") {
+            when (AppContainer.sessionManager.checkSession()) {
 
-                popUpTo("login") {
-                    inclusive = true
+                SessionState.NeedsOnboarding -> {
+
+                    navController.navigate("onboarding") {
+
+                        popUpTo("login") {
+                            inclusive = true
+                        }
+
+                    }
+
                 }
+
+                SessionState.LoggedIn -> {
+
+                    navController.navigate("home") {
+
+                        popUpTo("login") {
+                            inclusive = true
+                        }
+
+                    }
+
+                }
+
+                else -> Unit
 
             }
 
