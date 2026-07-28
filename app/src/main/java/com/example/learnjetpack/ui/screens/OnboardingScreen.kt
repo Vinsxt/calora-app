@@ -18,6 +18,7 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.unit.dp
+import com.example.learnjetpack.ui.components.OnboardingScaffold
 
 @Composable
 fun OnboardingScreen() {
@@ -37,44 +38,47 @@ fun OnboardingScreen() {
         when (viewModel.currentStep) {
 
             0 -> {
-                Text(
-                    text = "👋 Welcome to Calora",
-                    style = MaterialTheme.typography.headlineMedium
-                )
-                Spacer(
-                    modifier = Modifier.height(16.dp)
-                )
-                Text(
-                    text = "What should we call you?"
-                )
-                Spacer(
-                    modifier = Modifier.height(24.dp)
-                )
-                OutlinedTextField(
-                    value = viewModel.displayName,
-                    onValueChange = {
-                        viewModel.updateDisplayName(it)
-                    },
-                    modifier = Modifier.fillMaxWidth(),
-                    label = {
-                        Text("Display Name")
-                    }
-                )
-                Spacer(
-                    modifier = Modifier.height(24.dp)
-                )
-                Button(
-                    onClick = {
+                OnboardingScaffold(
+                    title = "👋 Welcome to Calora",
+                    subtitle = "What should we call you?",
+                    buttonEnabled = viewModel.displayName.isNotBlank(),
+                    onContinue = {
                         viewModel.nextStep()
-                    },
-                    enabled = viewModel.displayName.isNotBlank()
+                    }
                 ) {
-                    Text("Continue")
+                    OutlinedTextField(
+                        value = viewModel.displayName,
+                        onValueChange = {
+                            viewModel.updateDisplayName(it)
+                        },
+                        modifier = Modifier.fillMaxWidth(),
+                        label = {
+                            Text("Display Name")
+                        }
+                    )
                 }
             }
 
             1 -> {
-                // Height page
+                OnboardingScaffold(
+                    title = "📏 Height",
+                    subtitle = "How tall are you?",
+                    buttonEnabled = viewModel.heightCm.isNotBlank(),
+                    onContinue = {
+                        viewModel.nextStep()
+                    }
+                ) {
+                    OutlinedTextField(
+                        value = viewModel.heightCm,
+                        onValueChange = {
+                            viewModel.updateHeight(it)
+                        },
+                        modifier = Modifier.fillMaxWidth(),
+                        label = {
+                            Text("Height (cm)")
+                        }
+                    )
+                }
             }
 
             2 -> {
