@@ -19,6 +19,10 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.unit.dp
 import com.example.learnjetpack.ui.components.OnboardingScaffold
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.ui.text.input.KeyboardType
+import com.example.learnjetpack.ui.components.OnboardingTextField
+import com.example.learnjetpack.ui.components.SelectionCard
 
 @Composable
 fun OnboardingScreen() {
@@ -46,15 +50,12 @@ fun OnboardingScreen() {
                         viewModel.nextStep()
                     }
                 ) {
-                    OutlinedTextField(
+                    OnboardingTextField(
                         value = viewModel.displayName,
                         onValueChange = {
                             viewModel.updateDisplayName(it)
                         },
-                        modifier = Modifier.fillMaxWidth(),
-                        label = {
-                            Text("Display Name")
-                        }
+                        label = "Display Name"
                     )
                 }
             }
@@ -68,25 +69,62 @@ fun OnboardingScreen() {
                         viewModel.nextStep()
                     }
                 ) {
-                    OutlinedTextField(
+                    OnboardingTextField(
                         value = viewModel.heightCm,
                         onValueChange = {
                             viewModel.updateHeight(it)
                         },
-                        modifier = Modifier.fillMaxWidth(),
-                        label = {
-                            Text("Height (cm)")
-                        }
+                        label = "Height (cm)",
+                        keyboardType = KeyboardType.Number
                     )
                 }
             }
 
             2 -> {
-                // Weight page
+                OnboardingScaffold(
+                    title = "⚖️ Weight",
+                    subtitle = "What's your current weight?",
+                    buttonEnabled = viewModel.weightKg.isNotBlank(),
+                    onContinue = {
+                        viewModel.nextStep()
+                    }
+                ) {
+                    OnboardingTextField(
+                        value = viewModel.weightKg,
+                        onValueChange = {
+                            viewModel.updateWeight(it)
+                        },
+                        label = "Weight (kg)",
+                        keyboardType = KeyboardType.Decimal
+                    )
+                }
             }
 
             3 -> {
-                // Gender page
+                OnboardingScaffold(
+                    title = "🚻 Gender",
+                    subtitle = "Select your gender",
+                    buttonEnabled = viewModel.gender.isNotBlank(),
+                    onContinue = {
+                        viewModel.nextStep()
+                    }
+                ) {
+                    SelectionCard(
+                        text = "Male",
+                        selected = viewModel.gender == "Male",
+                        onClick = {
+                            viewModel.updateGender("Male")
+                        }
+                    )
+
+                    SelectionCard(
+                        text = "Female",
+                        selected = viewModel.gender == "Female",
+                        onClick = {
+                            viewModel.updateGender("Female")
+                        }
+                    )
+                }
             }
 
             4 -> {
