@@ -9,6 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
+import com.example.learnjetpack.navigation.Routes
 
 @Composable
 fun HomeScreen(
@@ -25,8 +26,8 @@ fun HomeScreen(
 
         Button(
             onClick = {
-                navController.navigate("login") {
-                    popUpTo("home") {
+                navController.navigate(Routes.LOGIN) {
+                    popUpTo(Routes.HOME) {
                         inclusive = true
                     }
                 }

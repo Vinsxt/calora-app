@@ -18,7 +18,6 @@ import com.example.learnjetpack.ui.screens.LoginScreen
 import com.example.learnjetpack.di.AppContainer
 import com.example.learnjetpack.screens.OnboardingScreen
 import com.example.learnjetpack.session.SessionState
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 
 @Composable
@@ -57,28 +56,28 @@ fun AppNavigation() {
         startDestination = when (sessionState) {
 
             SessionState.LoggedOut ->
-                "login"
+                Routes.LOGIN
 
             SessionState.NeedsOnboarding ->
-                "onboarding"
+                Routes.ONBOARDING
 
             SessionState.LoggedIn ->
-                "home"
+                Routes.HOME
 
             SessionState.Loading ->
-                "login" // unreachable because of the early return
+                Routes.LOGIN // unreachable because of the early return
         }
     ) {
 
-        composable("login") {
+        composable(Routes.LOGIN) {
             LoginScreen(navController)
         }
 
-        composable("home") {
+        composable(Routes.HOME) {
             HomeScreen(navController)
         }
 
-        composable("onboarding") {
+        composable(Routes.ONBOARDING) {
             OnboardingScreen(navController)
         }
     }

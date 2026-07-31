@@ -29,6 +29,7 @@ import com.example.learnjetpack.ui.onboarding.PhysicalInfoStep
 import com.example.learnjetpack.ui.onboarding.LifestyleStep
 import androidx.compose.runtime.LaunchedEffect
 import androidx.navigation.NavController
+import com.example.learnjetpack.navigation.Routes
 
 @Composable
 fun OnboardingScreen(
@@ -38,8 +39,8 @@ fun OnboardingScreen(
 
     LaunchedEffect(viewModel.onboardingFinished) {
         if (viewModel.onboardingFinished) {
-            navController.navigate("home") {
-                popUpTo("onboarding") {
+            navController.navigate(Routes.HOME) {
+                popUpTo(Routes.ONBOARDING) {
                     inclusive = true
                 }
             }

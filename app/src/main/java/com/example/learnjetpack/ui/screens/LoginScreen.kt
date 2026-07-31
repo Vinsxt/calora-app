@@ -18,6 +18,7 @@ import com.example.learnjetpack.google.GoogleSignInManager
 import com.example.learnjetpack.session.SessionState
 import com.example.learnjetpack.viewmodel.LoginViewModel
 import com.example.learnjetpack.di.AppContainer
+import com.example.learnjetpack.navigation.Routes
 
 @Composable
 fun LoginScreen(
@@ -40,9 +41,9 @@ fun LoginScreen(
 
                 SessionState.NeedsOnboarding -> {
 
-                    navController.navigate("onboarding") {
+                    navController.navigate(Routes.ONBOARDING) {
 
-                        popUpTo("login") {
+                        popUpTo(Routes.LOGIN) {
                             inclusive = true
                         }
 
@@ -52,9 +53,9 @@ fun LoginScreen(
 
                 SessionState.LoggedIn -> {
 
-                    navController.navigate("home") {
+                    navController.navigate(Routes.HOME) {
 
-                        popUpTo("login") {
+                        popUpTo(Routes.LOGIN) {
                             inclusive = true
                         }
 
