@@ -1,6 +1,8 @@
 package com.example.learnjetpack.data.repository
 
 import com.example.learnjetpack.data.remote.supabase
+import com.example.learnjetpack.model.BodyMeasurement
+import com.example.learnjetpack.model.InsertBodyMeasurementRequest
 import io.github.jan.supabase.auth.auth
 import io.github.jan.supabase.auth.providers.Google
 import io.github.jan.supabase.auth.providers.builtin.IDToken
@@ -89,7 +91,6 @@ class UserRepository {
                 profile.goal != null
 
     }
-
     suspend fun updateProfile(
         request: UpdateProfileRequest
     ) {
@@ -103,5 +104,43 @@ class UserRepository {
                     )
                 }
             }
+        }
+
+    suspend fun insertBodyMeasurement(
+        weightKg: Double
+    ) {
+
+        val user =
+            supabase.auth.currentUserOrNull()
+                ?: return
+
+        supabase
+            .from("body_measurements")
+            .insert(
+                InsertBodyMeasurementRequest(
+                    user_id = user.id,
+                    weight_kg = weightKg
+                )
+            )
+    }
+
+    suspend fun getLatestBodyMeasurement(): BodyMeasurement? {
+
+        val user =
+            supabase.auth.currentUserOrNull()
+                ?: return null
+
+        return supabase
+            .from("body_measurements")
+            .select {
+                filter {
+                    eq("user_id", user.id)
+                }
+            }
+            .decodeList<BodyMeasurement>()
+            .maxByOrNull {
+                it.recorded_at
+            }
+
     }
 }
