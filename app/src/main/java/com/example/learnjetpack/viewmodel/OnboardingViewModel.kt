@@ -83,8 +83,8 @@ class OnboardingViewModel : ViewModel() {
                 UpdateProfileRequest(
                     display_name = displayName,
                     height_cm = heightCm.toInt(),
-                    gender = gender,
-                    birth_date = birthDate,
+                    sex = gender,
+                    birthday = birthDate,
                     activity_level = activityLevel,
                     goal = goal
                 )

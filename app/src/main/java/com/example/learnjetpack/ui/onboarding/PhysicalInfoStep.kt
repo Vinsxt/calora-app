@@ -22,7 +22,7 @@ fun PhysicalInfoStep(
                 viewModel.weightKg.isNotBlank() &&
                 viewModel.gender.isNotBlank(),
         onContinue = {
-            viewModel.continueOnboarding()
+            viewModel.nextStep()
         }
     ) {
         OnboardingTextField(

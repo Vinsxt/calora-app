@@ -31,41 +31,24 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.navigation.NavController
 
 @Composable
-fun OnboardingScreen(navController: NavController) {
-
+fun OnboardingScreen(
+    navController: NavController
+) {
     val viewModel: OnboardingViewModel = viewModel()
 
     LaunchedEffect(viewModel.onboardingFinished) {
         if (viewModel.onboardingFinished) {
             navController.navigate("home") {
-                popUpTo("onboarding") { inclusive = true }
+                popUpTo("onboarding") {
+                    inclusive = true
+                }
             }
         }
     }
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(24.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Top
-    ) {
-        Spacer(
-            modifier = Modifier.height(80.dp)
-        )
-        when (viewModel.currentStep) {
-
-            0 -> {
-                NameStep(viewModel)
-            }
-
-            1 -> {
-                PhysicalInfoStep(viewModel)
-            }
-
-            2 -> {
-                LifestyleStep(viewModel)
-            }
-        }
+    when (viewModel.currentStep) {
+        0 -> NameStep(viewModel)
+        1 -> PhysicalInfoStep(viewModel)
+        2 -> LifestyleStep(viewModel)
     }
 }

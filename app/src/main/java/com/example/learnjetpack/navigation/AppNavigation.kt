@@ -79,7 +79,7 @@ fun AppNavigation() {
         }
 
         composable("onboarding") {
-            OnboardingScreen()
+            OnboardingScreen(navController)
         }
     }
 }

@@ -14,7 +14,7 @@ fun NameStep(
         subtitle = "What should we call you?",
         buttonEnabled = viewModel.displayName.isNotBlank(),
         onContinue = {
-            viewModel.continueOnboarding()
+            viewModel.nextStep()
         }
     ) {
         OnboardingTextField(
