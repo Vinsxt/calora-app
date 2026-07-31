@@ -89,6 +89,11 @@ class OnboardingViewModel : ViewModel() {
                     goal = goal
                 )
             )
+
+            repository.insertBodyMeasurement(
+                weightKg.toDouble()
+            )
+
             onboardingFinished = true
         }
     }
