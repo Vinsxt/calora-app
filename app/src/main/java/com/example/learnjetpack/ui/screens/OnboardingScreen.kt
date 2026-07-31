@@ -27,12 +27,21 @@ import com.example.learnjetpack.ui.components.SelectionCard
 import com.example.learnjetpack.ui.onboarding.NameStep
 import com.example.learnjetpack.ui.onboarding.PhysicalInfoStep
 import com.example.learnjetpack.ui.onboarding.LifestyleStep
-
+import androidx.compose.runtime.LaunchedEffect
+import androidx.navigation.NavController
 
 @Composable
-fun OnboardingScreen() {
+fun OnboardingScreen(navController: NavController) {
 
     val viewModel: OnboardingViewModel = viewModel()
+
+    LaunchedEffect(viewModel.onboardingFinished) {
+        if (viewModel.onboardingFinished) {
+            navController.navigate("home") {
+                popUpTo("onboarding") { inclusive = true }
+            }
+        }
+    }
 
     Column(
         modifier = Modifier

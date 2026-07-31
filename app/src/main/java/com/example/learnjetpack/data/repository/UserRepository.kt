@@ -7,6 +7,8 @@ import io.github.jan.supabase.auth.providers.builtin.IDToken
 import com.example.learnjetpack.model.Profile
 import io.github.jan.supabase.postgrest.from
 import io.github.jan.supabase.postgrest.query.Columns
+import com.example.learnjetpack.model.UpdateProfileRequest
+import io.github.jan.supabase.postgrest.from
 
 class UserRepository {
 
@@ -81,5 +83,20 @@ class UserRepository {
 
         return profile.onboarding_completed
 
+    }
+
+    suspend fun updateProfile(
+        request: UpdateProfileRequest
+    ) {
+        supabase
+            .from("profiles")
+            .update(request) {
+                filter {
+                    eq(
+                        "id",
+                        supabase.auth.currentUserOrNull()!!.id
+                    )
+                }
+            }
     }
 }

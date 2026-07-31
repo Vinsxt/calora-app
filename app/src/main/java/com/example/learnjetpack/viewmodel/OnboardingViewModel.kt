@@ -4,8 +4,17 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.launch
+import com.example.learnjetpack.data.repository.UserRepository
+import com.example.learnjetpack.model.UpdateProfileRequest
 
 class OnboardingViewModel : ViewModel() {
+
+    private val repository = UserRepository()
+
+    var onboardingFinished by mutableStateOf(false)
+        private set
     var currentStep by mutableStateOf(0)
         private set
     var displayName by mutableStateOf("")
@@ -69,13 +78,18 @@ class OnboardingViewModel : ViewModel() {
     }
 
     fun continueOnboarding() {
-        when (currentStep) {
-            0, 1 -> {
-                nextStep()
-            }
-            2 -> {
-                // Save profile later
-            }
+        viewModelScope.launch {
+            repository.updateProfile(
+                UpdateProfileRequest(
+                    display_name = displayName,
+                    height_cm = heightCm.toInt(),
+                    gender = gender,
+                    birth_date = birthDate,
+                    activity_level = activityLevel,
+                    goal = goal
+                )
+            )
+            onboardingFinished = true
         }
     }
 }
