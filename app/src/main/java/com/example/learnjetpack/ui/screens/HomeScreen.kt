@@ -10,11 +10,20 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import com.example.learnjetpack.navigation.Routes
+import androidx.compose.runtime.LaunchedEffect
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.learnjetpack.viewmodel.HomeViewModel
 
 @Composable
 fun HomeScreen(
     navController: NavHostController
 ) {
+
+    val viewModel: HomeViewModel = viewModel()
+
+    LaunchedEffect(Unit) {
+        viewModel.loadProfile()
+    }
 
     Column(
         modifier = Modifier.fillMaxSize(),
@@ -22,18 +31,46 @@ fun HomeScreen(
         verticalArrangement = Arrangement.Center
     ) {
 
-        Text("Home Screen")
+        if (viewModel.isLoading) {
 
-        Button(
-            onClick = {
-                navController.navigate(Routes.LOGIN) {
-                    popUpTo(Routes.HOME) {
-                        inclusive = true
+            Column(
+                modifier = Modifier.fillMaxSize(),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
+            ) {
+                Text("Loading profile...")
+            }
+
+            return
+        }
+
+        Column(
+            modifier = Modifier.fillMaxSize(),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ) {
+
+            Text("Welcome")
+
+            Text(viewModel.profile?.display_name ?: "No Name")
+
+            Text(viewModel.profile?.height_cm?.toString() ?: "-")
+
+            Text(viewModel.profile?.sex ?: "-")
+
+            Text(viewModel.profile?.goal ?: "-")
+
+            Button(
+                onClick = {
+                    navController.navigate(Routes.LOGIN) {
+                        popUpTo(Routes.HOME) {
+                            inclusive = true
+                        }
                     }
                 }
+            ) {
+                Text("Logout")
             }
-        ) {
-            Text("Logout")
         }
     }
 }

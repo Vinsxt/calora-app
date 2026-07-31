@@ -81,7 +81,12 @@ class UserRepository {
         val profile = getCurrentProfile()
             ?: return false
 
-        return profile.onboarding_completed
+        return profile.display_name != null &&
+                profile.height_cm != null &&
+                profile.sex != null &&
+                profile.birthday != null &&
+                profile.activity_level != null &&
+                profile.goal != null
 
     }
 
