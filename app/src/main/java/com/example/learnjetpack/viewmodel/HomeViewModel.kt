@@ -9,9 +9,13 @@ import com.example.learnjetpack.data.repository.UserRepository
 import com.example.learnjetpack.model.Profile
 import kotlinx.coroutines.launch
 import com.example.learnjetpack.model.HealthMetrics
+import com.example.learnjetpack.model.BodyMeasurement
+import com.example.learnjetpack.utils.HealthCalculator
 
 class HomeViewModel : ViewModel() {
 
+    var latestWeight by mutableStateOf<BodyMeasurement?>(null)
+        private set
     private val repository = UserRepository()
 
     var metrics by mutableStateOf<HealthMetrics?>(null)
@@ -25,7 +29,71 @@ class HomeViewModel : ViewModel() {
 
     fun loadProfile() {
         viewModelScope.launch {
-            profile = repository.getCurrentProfile()
+
+            val profile = repository.getCurrentProfile() ?: run {
+                isLoading = false
+                return@launch
+            }
+
+            val weight = repository.getLatestBodyMeasurement() ?: run {
+                isLoading = false
+                return@launch
+            }
+
+            this@HomeViewModel.profile = profile
+            latestWeight = weight
+
+            val birthday = profile.birthday ?: run {
+                isLoading = false
+                return@launch
+            }
+
+            val sex = profile.sex ?: run {
+                isLoading = false
+                return@launch
+            }
+
+            val height = profile.height_cm ?: run {
+                isLoading = false
+                return@launch
+            }
+
+            val activity = profile.activity_level ?: run {
+                isLoading = false
+                return@launch
+            }
+
+            val goal = profile.goal ?: run {
+                isLoading = false
+                return@launch
+            }
+
+            val age = HealthCalculator.calculateAge(birthday)
+
+            val bmr = HealthCalculator.calculateBMR(
+                sex = sex,
+                weightKg = weight.weight_kg,
+                heightCm = height,
+                age = age
+            )
+
+            val tdee = HealthCalculator.calculateTDEE(
+                bmr = bmr,
+                activityLevel = activity
+            )
+
+            val protein = HealthCalculator.calculateProtein(
+                weightKg = weight.weight_kg,
+                goal = goal
+            )
+
+            metrics = HealthMetrics(
+                age = age,
+                bmr = bmr,
+                tdee = tdee,
+                proteinGoal = protein
+            )
+
             isLoading = false
         }
     }

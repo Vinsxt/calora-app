@@ -4,6 +4,38 @@ import java.util.Calendar
 
 object HealthCalculator {
 
+    fun calculateAge(
+        birthday: String
+    ): Int {
+
+        val parts = birthday.split("-")
+
+        if (parts.size != 3) {
+            return 0
+        }
+
+        val birthYear = parts[0].toInt()
+        val birthMonth = parts[1].toInt()
+        val birthDay = parts[2].toInt()
+
+        val today = Calendar.getInstance()
+
+        var age =
+            today.get(Calendar.YEAR) - birthYear
+
+        if (
+            today.get(Calendar.MONTH) + 1 < birthMonth ||
+            (
+                    today.get(Calendar.MONTH) + 1 == birthMonth &&
+                            today.get(Calendar.DAY_OF_MONTH) < birthDay
+                    )
+        ) {
+            age--
+        }
+
+        return age
+    }
+
     fun calculateBMR(
         sex: String,
         weightKg: Double,
