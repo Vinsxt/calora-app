@@ -73,35 +73,45 @@ fun HomeScreen(
 
             MetricCard(
                 title = "🎂 Age",
-                value = "${viewModel.metrics?.age}"
+                current = viewModel.metrics?.age ?: 0,
+                target = viewModel.metrics?.age ?: 0,
+                unit = "yrs"
             )
 
             Spacer(modifier = Modifier.height(16.dp))
 
             MetricCard(
                 title = "🔥 BMR",
-                value = "${viewModel.metrics?.bmr} kcal"
+                current = viewModel.metrics?.bmr ?: 0,
+                target = viewModel.metrics?.bmr ?: 0,
+                unit = "kcal"
             )
 
             Spacer(modifier = Modifier.height(16.dp))
 
             MetricCard(
                 title = "⚡ TDEE",
-                value = "${viewModel.metrics?.tdee} kcal"
+                current = viewModel.metrics?.tdee ?: 0,
+                target = viewModel.metrics?.tdee ?: 0,
+                unit = "kcal"
             )
 
             Spacer(modifier = Modifier.height(16.dp))
 
             MetricCard(
-                title = "💪 Protein Target",
-                value = "${viewModel.metrics?.proteinGoal} g"
+                title = "💪 Protein",
+                current = viewModel.metrics?.proteinGoal ?: 0,
+                target = viewModel.metrics?.proteinGoal ?: 0,
+                unit = "g"
             )
 
             Spacer(modifier = Modifier.height(16.dp))
 
             MetricCard(
-                title = "⚖️ Current Weight",
-                value = "${viewModel.latestWeight?.weight_kg} kg"
+                title = "⚖️ Weight",
+                current = viewModel.latestWeight?.weight_kg?.toInt() ?: 0,
+                target = viewModel.latestWeight?.weight_kg?.toInt() ?: 0,
+                unit = "kg"
             )
 
             Button(
