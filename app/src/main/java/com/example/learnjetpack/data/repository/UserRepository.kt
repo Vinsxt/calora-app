@@ -2,6 +2,7 @@ package com.example.learnjetpack.data.repository
 
 import com.example.learnjetpack.data.remote.supabase
 import com.example.learnjetpack.model.BodyMeasurement
+import com.example.learnjetpack.model.CreateFoodLogRequest
 import com.example.learnjetpack.model.FoodLog
 import com.example.learnjetpack.model.InsertBodyMeasurementRequest
 import io.github.jan.supabase.auth.auth
@@ -146,12 +147,28 @@ class UserRepository {
     }
 
     suspend fun insertFoodLog(
-        foodLog: FoodLog
+        foodLog: CreateFoodLogRequest
     ) {
+
+        val user =
+            supabase.auth.currentUserOrNull()
+                ?: return
 
         supabase
             .from("food_logs")
-            .insert(foodLog)
+            .insert(
+                mapOf(
+                    "user_id" to user.id,
+                    "food_name" to foodLog.food_name,
+                    "calories" to foodLog.calories,
+                    "protein" to foodLog.protein,
+                    "carbs" to foodLog.carbs,
+                    "fat" to foodLog.fat,
+                    "fiber" to foodLog.fiber,
+                    "quantity" to foodLog.quantity,
+                    "meal_type" to foodLog.meal_type
+                )
+            )
 
     }
 

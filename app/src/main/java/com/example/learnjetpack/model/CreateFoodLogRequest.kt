@@ -4,7 +4,6 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class CreateFoodLogRequest(
-    val user_id: String,
     val food_name: String,
     val calories: Double,
     val protein: Double,
