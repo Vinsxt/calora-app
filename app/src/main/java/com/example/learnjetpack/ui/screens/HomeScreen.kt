@@ -22,8 +22,13 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.ui.unit.dp
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.Icon
+import androidx.compose.material3.Scaffold
 
 @Composable
 fun HomeScreen(
@@ -36,18 +41,27 @@ fun HomeScreen(
         viewModel.loadProfile()
     }
 
-    Column(
-        modifier = Modifier.fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
-    ) {
+    Scaffold(
+        floatingActionButton = {
+            FloatingActionButton(
+                onClick = {
+                    navController.navigate(Routes.ADD_FOOD)
+                }
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Add,
+                    contentDescription = "Add Food"
+                )
+            }
+        }
+    ) { padding ->
 
         if (viewModel.isLoading) {
 
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .verticalScroll(rememberScrollState())
+                    .padding(padding)
                     .padding(24.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
@@ -55,13 +69,16 @@ fun HomeScreen(
                 Text("Loading profile...")
             }
 
-            return
+            return@Scaffold
         }
 
         Column(
-            modifier = Modifier.fillMaxSize(),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
+            modifier = Modifier
+                .fillMaxSize()
+                .verticalScroll(rememberScrollState())
+                .padding(padding)
+                .padding(24.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
 
             Text(
@@ -114,6 +131,8 @@ fun HomeScreen(
                 unit = "kg"
             )
 
+            Spacer(modifier = Modifier.height(32.dp))
+
             Button(
                 onClick = {
                     navController.navigate(Routes.LOGIN) {
@@ -125,6 +144,8 @@ fun HomeScreen(
             ) {
                 Text("Logout")
             }
+
         }
+
     }
 }

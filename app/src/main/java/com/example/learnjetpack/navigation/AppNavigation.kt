@@ -19,6 +19,7 @@ import com.example.learnjetpack.di.AppContainer
 import com.example.learnjetpack.screens.OnboardingScreen
 import com.example.learnjetpack.session.SessionState
 import androidx.compose.runtime.setValue
+import com.example.learnjetpack.ui.screens.AddFoodScreen
 
 @Composable
 fun AppNavigation() {
@@ -79,6 +80,10 @@ fun AppNavigation() {
 
         composable(Routes.ONBOARDING) {
             OnboardingScreen(navController)
+        }
+
+        composable(Routes.ADD_FOOD) {
+            AddFoodScreen()
         }
     }
 }
