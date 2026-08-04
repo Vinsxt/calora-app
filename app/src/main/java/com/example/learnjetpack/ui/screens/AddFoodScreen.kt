@@ -4,31 +4,30 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.learnjetpack.viewmodel.AddFoodViewModel
 
 @Composable
-fun AddFoodScreen() {
+fun AddFoodScreen(
+    viewModel: AddFoodViewModel = viewModel()
+) {
 
-    var foodName by remember { mutableStateOf("") }
-    var calories by remember { mutableStateOf("") }
-    var protein by remember { mutableStateOf("") }
-    var carbs by remember { mutableStateOf("") }
-    var fat by remember { mutableStateOf("") }
-    var fiber by remember { mutableStateOf("") }
-    var quantity by remember { mutableStateOf("") }
-
-    var mealType by remember {
-        mutableStateOf("Lunch")
+    LaunchedEffect(viewModel.saveSuccess) {
+        if (viewModel.saveSuccess) {
+            // We'll navigate back later
+        }
     }
 
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .verticalScroll(
-                rememberScrollState()
-            )
+            .verticalScroll(rememberScrollState())
             .padding(24.dp)
     ) {
 
@@ -37,70 +36,116 @@ fun AddFoodScreen() {
             style = MaterialTheme.typography.headlineMedium
         )
 
-        Spacer(Modifier.height(24.dp))
+        Spacer(modifier = Modifier.height(24.dp))
 
         OutlinedTextField(
-            value = foodName,
-            onValueChange = { foodName = it },
-            label = { Text("Food Name") },
+            value = viewModel.foodName,
+            onValueChange = {
+                viewModel.updateFoodName(it)
+            },
+            label = {
+                Text("Food Name")
+            },
             modifier = Modifier.fillMaxWidth()
         )
 
-        Spacer(Modifier.height(12.dp))
+        Spacer(modifier = Modifier.height(12.dp))
 
         OutlinedTextField(
-            value = calories,
-            onValueChange = { calories = it },
-            label = { Text("Calories") },
+            value = viewModel.calories,
+            onValueChange = {
+                viewModel.updateCalories(it)
+            },
+            label = {
+                Text("Calories")
+            },
+            keyboardOptions = KeyboardOptions(
+                keyboardType = KeyboardType.Decimal
+            ),
             modifier = Modifier.fillMaxWidth()
         )
 
-        Spacer(Modifier.height(12.dp))
+        Spacer(modifier = Modifier.height(12.dp))
 
         OutlinedTextField(
-            value = protein,
-            onValueChange = { protein = it },
-            label = { Text("Protein (g)") },
+            value = viewModel.protein,
+            onValueChange = {
+                viewModel.updateProtein(it)
+            },
+            label = {
+                Text("Protein (g)")
+            },
+            keyboardOptions = KeyboardOptions(
+                keyboardType = KeyboardType.Decimal
+            ),
             modifier = Modifier.fillMaxWidth()
         )
 
-        Spacer(Modifier.height(12.dp))
+        Spacer(modifier = Modifier.height(12.dp))
 
         OutlinedTextField(
-            value = carbs,
-            onValueChange = { carbs = it },
-            label = { Text("Carbs (g)") },
+            value = viewModel.carbs,
+            onValueChange = {
+                viewModel.updateCarbs(it)
+            },
+            label = {
+                Text("Carbs (g)")
+            },
+            keyboardOptions = KeyboardOptions(
+                keyboardType = KeyboardType.Decimal
+            ),
             modifier = Modifier.fillMaxWidth()
         )
 
-        Spacer(Modifier.height(12.dp))
+        Spacer(modifier = Modifier.height(12.dp))
 
         OutlinedTextField(
-            value = fat,
-            onValueChange = { fat = it },
-            label = { Text("Fat (g)") },
+            value = viewModel.fat,
+            onValueChange = {
+                viewModel.updateFat(it)
+            },
+            label = {
+                Text("Fat (g)")
+            },
+            keyboardOptions = KeyboardOptions(
+                keyboardType = KeyboardType.Decimal
+            ),
             modifier = Modifier.fillMaxWidth()
         )
 
-        Spacer(Modifier.height(12.dp))
+        Spacer(modifier = Modifier.height(12.dp))
 
         OutlinedTextField(
-            value = fiber,
-            onValueChange = { fiber = it },
-            label = { Text("Fiber (g)") },
+            value = viewModel.fiber,
+            onValueChange = {
+                viewModel.updateFiber(it)
+            },
+            label = {
+                Text("Fiber (g)")
+            },
+            keyboardOptions = KeyboardOptions(
+                keyboardType = KeyboardType.Decimal
+            ),
             modifier = Modifier.fillMaxWidth()
         )
 
-        Spacer(Modifier.height(12.dp))
+        Spacer(modifier = Modifier.height(12.dp))
 
         OutlinedTextField(
-            value = quantity,
-            onValueChange = { quantity = it },
-            label = { Text("Quantity (g)") },
+            value = viewModel.quantity,
+            onValueChange = {
+                viewModel.updateQuantity(it)
+            },
+            label = {
+                Text("Quantity (g)")
+            },
+            keyboardOptions = KeyboardOptions(
+                keyboardType = KeyboardType.Decimal
+            ),
             modifier = Modifier.fillMaxWidth()
         )
 
-        Spacer(Modifier.height(24.dp))
+        Spacer(modifier = Modifier.height(24.dp))
 
         Text("Meal Type")
 
@@ -109,33 +154,36 @@ fun AddFoodScreen() {
             "Lunch",
             "Dinner",
             "Snack"
-        ).forEach {
+        ).forEach { type ->
 
             Row {
 
                 RadioButton(
-                    selected = mealType == it,
+                    selected = viewModel.mealType == type,
                     onClick = {
-                        mealType = it
+                        viewModel.updateMealType(type)
                     }
                 )
 
                 Text(
-                    text = it,
+                    text = type,
                     modifier = Modifier.padding(top = 12.dp)
                 )
             }
+
         }
 
-        Spacer(Modifier.height(24.dp))
+        Spacer(modifier = Modifier.height(24.dp))
 
         Button(
             onClick = {
-
+                viewModel.saveFood()
             },
             modifier = Modifier.fillMaxWidth()
         ) {
             Text("Save Food")
         }
+
     }
+
 }
