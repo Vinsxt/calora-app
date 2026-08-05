@@ -24,12 +24,19 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.ui.unit.dp
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.TextButton
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import com.example.learnjetpack.model.FoodLog
 import com.example.learnjetpack.ui.components.FoodLogCard
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
 
 @Composable
 fun HomeScreen(
@@ -37,6 +44,10 @@ fun HomeScreen(
 ) {
 
     val viewModel: HomeViewModel = viewModel()
+
+    var foodToDelete by remember {
+        mutableStateOf<FoodLog?>(null)
+    }
 
     LaunchedEffect(Unit) {
         viewModel.loadProfile()
@@ -135,15 +146,6 @@ fun HomeScreen(
             Spacer(modifier = Modifier.height(16.dp))
 
             MetricCard(
-                title = "💪 Protein",
-                current = viewModel.metrics?.proteinGoal ?: 0,
-                target = viewModel.metrics?.proteinGoal ?: 0,
-                unit = "g"
-            )
-
-            Spacer(modifier = Modifier.height(16.dp))
-
-            MetricCard(
                 title = "⚖️ Weight",
                 current = viewModel.latestWeight?.weight_kg?.toInt() ?: 0,
                 target = viewModel.latestWeight?.weight_kg?.toInt() ?: 0,
@@ -191,9 +193,7 @@ fun HomeScreen(
                         FoodLogCard(
                             food = food,
                             onDelete = {
-                                food.id?.let {
-                                    viewModel.deleteFood(it)
-                                }
+                                foodToDelete = food
                             }
                         )
                         Spacer(
@@ -230,6 +230,47 @@ fun HomeScreen(
             }
 
         }
+    }
 
+    foodToDelete?.let { food ->
+
+        AlertDialog(
+            onDismissRequest = {
+                foodToDelete = null
+            },
+            title = {
+                Text("Delete Food")
+            },
+            text = {
+                Text("Delete ${food.food_name}?")
+            },
+            confirmButton = {
+
+                TextButton(
+                    onClick = {
+
+                        food.id?.let {
+                            viewModel.deleteFood(it)
+                        }
+
+                        foodToDelete = null
+
+                    }
+                ) {
+                    Text("Delete")
+                }
+
+            },
+            dismissButton = {
+
+                TextButton(
+                    onClick = {
+                        foodToDelete = null
+                    }
+                ) {
+                    Text("Cancel")
+                }
+            }
+        )
     }
 }
