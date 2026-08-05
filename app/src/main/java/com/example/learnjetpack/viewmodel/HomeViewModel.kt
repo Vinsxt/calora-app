@@ -113,4 +113,18 @@ class HomeViewModel : ViewModel() {
             isLoading = false
         }
     }
+
+    fun deleteFood(
+        id: String
+    ) {
+
+        viewModelScope.launch {
+
+            repository.deleteFoodLog(id)
+
+            loadProfile()
+
+        }
+
+    }
 }

@@ -8,6 +8,7 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -16,7 +17,8 @@ import com.example.learnjetpack.model.FoodLog
 
 @Composable
 fun FoodLogCard(
-    food: FoodLog
+    food: FoodLog,
+    onDelete: () -> Unit
 ) {
 
     Card(
@@ -50,7 +52,7 @@ fun FoodLogCard(
                 )
 
                 Text(
-                    text = food.meal_type,
+                    text = "${food.protein.toInt()}P • ${food.carbs.toInt()}C • ${food.fat.toInt()}F",
                     style = MaterialTheme.typography.bodySmall
                 )
 
@@ -64,10 +66,11 @@ fun FoodLogCard(
                     "${food.calories.toInt()} kcal"
                 )
 
-                Text(
-                    "P ${food.protein.toInt()}g",
-                    style = MaterialTheme.typography.bodySmall
-                )
+                TextButton(
+                    onClick = onDelete
+                ) {
+                    Text("Delete")
+                }
 
             }
 

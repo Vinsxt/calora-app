@@ -188,6 +188,19 @@ class UserRepository {
                 }
             }
             .decodeList<FoodLog>()
+    }
+
+    suspend fun deleteFoodLog(
+        id: String
+    ) {
+
+        supabase
+            .from("food_logs")
+            .delete {
+                filter {
+                    eq("id", id)
+                }
+            }
 
     }
 }

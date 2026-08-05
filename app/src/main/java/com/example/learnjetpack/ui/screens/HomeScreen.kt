@@ -163,14 +163,54 @@ fun HomeScreen(
                 modifier = Modifier.height(16.dp)
             )
 
-            viewModel.foodLogs.forEach {
+            val groupedFoods =
+                viewModel.foodLogs.groupBy {
+                    it.meal_type
+                }
 
-                FoodLogCard(
-                    food = it
-                )
+            listOf(
+                "Breakfast",
+                "Lunch",
+                "Dinner",
+                "Snack"
+            ).forEach { meal ->
 
-                Spacer(
-                    modifier = Modifier.height(12.dp)
+                val foods =
+                    groupedFoods[meal]
+                        ?: emptyList()
+
+                if (foods.isNotEmpty()) {
+                    Text(
+                        text = meal,
+                        style = MaterialTheme.typography.titleLarge
+                    )
+                    Spacer(
+                        modifier = Modifier.height(8.dp)
+                    )
+                    foods.forEach { food ->
+                        FoodLogCard(
+                            food = food,
+                            onDelete = {
+                                food.id?.let {
+                                    viewModel.deleteFood(it)
+                                }
+                            }
+                        )
+                        Spacer(
+                            modifier = Modifier.height(8.dp)
+                        )
+                    }
+                    Spacer(
+                        modifier = Modifier.height(16.dp)
+                    )
+                }
+            }
+
+            if (viewModel.foodLogs.isEmpty()) {
+
+                Text(
+                    text = "No meals logged today 🍽️",
+                    style = MaterialTheme.typography.bodyLarge
                 )
 
             }
