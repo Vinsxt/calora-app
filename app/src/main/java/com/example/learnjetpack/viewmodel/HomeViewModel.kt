@@ -10,7 +10,9 @@ import com.example.learnjetpack.model.Profile
 import kotlinx.coroutines.launch
 import com.example.learnjetpack.model.HealthMetrics
 import com.example.learnjetpack.model.BodyMeasurement
+import com.example.learnjetpack.model.FoodLog
 import com.example.learnjetpack.utils.HealthCalculator
+import com.example.learnjetpack.model.DailyNutrition
 
 class HomeViewModel : ViewModel() {
 
@@ -25,6 +27,12 @@ class HomeViewModel : ViewModel() {
         private set
 
     var isLoading by mutableStateOf(true)
+        private set
+
+    var foodLogs by mutableStateOf<List<FoodLog>>(emptyList())
+        private set
+
+    var dailyNutrition by mutableStateOf<DailyNutrition?>(null)
         private set
 
     fun loadProfile() {
@@ -42,6 +50,9 @@ class HomeViewModel : ViewModel() {
 
             this@HomeViewModel.profile = profile
             latestWeight = weight
+
+            foodLogs =
+                repository.getFoodLogs()
 
             val birthday = profile.birthday ?: run {
                 isLoading = false
@@ -93,6 +104,11 @@ class HomeViewModel : ViewModel() {
                 tdee = tdee,
                 proteinGoal = protein
             )
+
+            dailyNutrition =
+                HealthCalculator.calculateDailyNutrition(
+                    foodLogs
+                )
 
             isLoading = false
         }

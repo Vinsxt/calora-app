@@ -1,5 +1,7 @@
 package com.example.learnjetpack.utils
 
+import com.example.learnjetpack.model.DailyNutrition
+import com.example.learnjetpack.model.FoodLog
 import java.util.Calendar
 
 object HealthCalculator {
@@ -85,6 +87,20 @@ object HealthCalculator {
             }
 
         return (weightKg * multiplier).toInt()
+    }
+
+    fun calculateDailyNutrition(
+        foods: List<FoodLog>
+    ): DailyNutrition {
+
+        return DailyNutrition(
+            calories = foods.sumOf { it.calories },
+            protein = foods.sumOf { it.protein },
+            carbs = foods.sumOf { it.carbs },
+            fat = foods.sumOf { it.fat },
+            fiber = foods.sumOf { it.fiber }
+        )
+
     }
 
 }

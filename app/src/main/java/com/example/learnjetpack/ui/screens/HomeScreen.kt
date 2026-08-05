@@ -89,6 +89,24 @@ fun HomeScreen(
             Spacer(modifier = Modifier.height(24.dp))
 
             MetricCard(
+                title = "🔥 Calories",
+                current = viewModel.dailyNutrition?.calories?.toInt() ?: 0,
+                target = viewModel.metrics?.tdee ?: 0,
+                unit = "kcal"
+            )
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            MetricCard(
+                title = "💪 Protein",
+                current = viewModel.dailyNutrition?.protein?.toInt() ?: 0,
+                target = viewModel.metrics?.proteinGoal ?: 0,
+                unit = "g"
+            )
+
+            Spacer(modifier = Modifier.height(24.dp))
+
+            MetricCard(
                 title = "🎂 Age",
                 current = viewModel.metrics?.age ?: 0,
                 target = viewModel.metrics?.age ?: 0,
