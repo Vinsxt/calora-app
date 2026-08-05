@@ -5,6 +5,7 @@ import com.example.learnjetpack.model.BodyMeasurement
 import com.example.learnjetpack.model.CreateFoodLogRequest
 import com.example.learnjetpack.model.FoodLog
 import com.example.learnjetpack.model.InsertBodyMeasurementRequest
+import com.example.learnjetpack.model.InsertFoodLogRequest
 import io.github.jan.supabase.auth.auth
 import io.github.jan.supabase.auth.providers.Google
 import io.github.jan.supabase.auth.providers.builtin.IDToken
@@ -154,21 +155,22 @@ class UserRepository {
             supabase.auth.currentUserOrNull()
                 ?: return
 
+        val request =
+            InsertFoodLogRequest(
+                user_id = user.id,
+                food_name = foodLog.food_name,
+                calories = foodLog.calories,
+                protein = foodLog.protein,
+                carbs = foodLog.carbs,
+                fat = foodLog.fat,
+                fiber = foodLog.fiber,
+                quantity = foodLog.quantity,
+                meal_type = foodLog.meal_type
+            )
+
         supabase
             .from("food_logs")
-            .insert(
-                mapOf(
-                    "user_id" to user.id,
-                    "food_name" to foodLog.food_name,
-                    "calories" to foodLog.calories,
-                    "protein" to foodLog.protein,
-                    "carbs" to foodLog.carbs,
-                    "fat" to foodLog.fat,
-                    "fiber" to foodLog.fiber,
-                    "quantity" to foodLog.quantity,
-                    "meal_type" to foodLog.meal_type
-                )
-            )
+            .insert(request)
 
     }
 

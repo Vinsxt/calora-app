@@ -83,7 +83,7 @@ fun AppNavigation() {
         }
 
         composable(Routes.ADD_FOOD) {
-            AddFoodScreen()
+            AddFoodScreen(navController)
         }
     }
 }

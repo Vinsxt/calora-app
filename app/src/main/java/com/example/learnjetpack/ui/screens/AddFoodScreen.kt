@@ -11,16 +11,18 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavHostController
 import com.example.learnjetpack.viewmodel.AddFoodViewModel
 
 @Composable
 fun AddFoodScreen(
+    navController: NavHostController,
     viewModel: AddFoodViewModel = viewModel()
 ) {
 
     LaunchedEffect(viewModel.saveSuccess) {
         if (viewModel.saveSuccess) {
-            // We'll navigate back later
+            navController.popBackStack()
         }
     }
 
