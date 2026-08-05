@@ -192,6 +192,13 @@ fun HomeScreen(
                     foods.forEach { food ->
                         FoodLogCard(
                             food = food,
+                            onClick = {
+                                food.id?.let {
+                                    navController.navigate(
+                                        Routes.editFood(it)
+                                    )
+                                }
+                            },
                             onDelete = {
                                 foodToDelete = food
                             }

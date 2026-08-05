@@ -1,5 +1,6 @@
 package com.example.learnjetpack.ui.components
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Restaurant
@@ -18,17 +19,23 @@ import com.example.learnjetpack.model.FoodLog
 @Composable
 fun FoodLogCard(
     food: FoodLog,
+    onClick: () -> Unit,
     onDelete: () -> Unit
 ) {
 
     Card(
         modifier = Modifier.fillMaxWidth(),
+
         colors = CardDefaults.cardColors()
+
     ) {
 
         Row(
             modifier = Modifier
                 .fillMaxWidth()
+                .clickable{
+                    onClick()
+                }
                 .padding(16.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {

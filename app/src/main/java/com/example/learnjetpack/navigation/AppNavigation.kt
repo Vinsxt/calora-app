@@ -85,5 +85,15 @@ fun AppNavigation() {
         composable(Routes.ADD_FOOD) {
             AddFoodScreen(navController)
         }
+
+        composable(Routes.EDIT_FOOD) { backStackEntry ->
+            val foodId =
+                backStackEntry.arguments
+                    ?.getString("foodId")
+            AddFoodScreen(
+                navController = navController,
+                foodId = foodId
+            )
+        }
     }
 }

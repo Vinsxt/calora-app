@@ -17,6 +17,7 @@ import com.example.learnjetpack.viewmodel.AddFoodViewModel
 @Composable
 fun AddFoodScreen(
     navController: NavHostController,
+    foodId: String? = null,
     viewModel: AddFoodViewModel = viewModel()
 ) {
 
@@ -34,7 +35,11 @@ fun AddFoodScreen(
     ) {
 
         Text(
-            text = "Add Food",
+            text =
+                if (foodId == null)
+                    "Add Food"
+                else
+                    "Edit Food",
             style = MaterialTheme.typography.headlineMedium
         )
 
