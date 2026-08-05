@@ -174,22 +174,6 @@ class UserRepository {
 
     }
 
-    suspend fun getTodayFoodLogs(): List<FoodLog> {
-
-        val user =
-            supabase.auth.currentUserOrNull()
-                ?: return emptyList()
-
-        return supabase
-            .from("food_logs")
-            .select {
-                filter {
-                    eq("user_id", user.id)
-                }
-            }
-            .decodeList<FoodLog>()
-    }
-
     suspend fun getFoodLogs(): List<FoodLog> {
 
         val user =

@@ -29,6 +29,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
+import com.example.learnjetpack.ui.components.FoodLogCard
 
 @Composable
 fun HomeScreen(
@@ -148,6 +149,31 @@ fun HomeScreen(
                 target = viewModel.latestWeight?.weight_kg?.toInt() ?: 0,
                 unit = "kg"
             )
+
+            Spacer(
+                modifier = Modifier.height(32.dp)
+            )
+
+            Text(
+                text = "Today's Food",
+                style = MaterialTheme.typography.headlineSmall
+            )
+
+            Spacer(
+                modifier = Modifier.height(16.dp)
+            )
+
+            viewModel.foodLogs.forEach {
+
+                FoodLogCard(
+                    food = it
+                )
+
+                Spacer(
+                    modifier = Modifier.height(12.dp)
+                )
+
+            }
 
             Spacer(modifier = Modifier.height(32.dp))
 
